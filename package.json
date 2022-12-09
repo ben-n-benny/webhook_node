@@ -4,7 +4,7 @@
   "description": "webhook for paymongo payments",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node app.js"
   },
   "author": "",
   "license": "ISC",
