@@ -4,7 +4,6 @@
   "description": "webhook for paymongo payments",
   "main": "index.js",
   "scripts": {
-    "build": "node app.js"
   },
   "author": "",
   "license": "ISC",
