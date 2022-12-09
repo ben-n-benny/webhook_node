@@ -7,7 +7,7 @@ const server = http.createServer(function(req, res){
     return res.end();
 })
 
-server.listen(5000, function(error){
+server.listen(process.env.PORT || 5000, function(error){
     if (error){
         console.log('Error',error);
     }
