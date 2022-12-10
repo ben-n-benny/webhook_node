@@ -79,20 +79,26 @@ app.post("/", (req, res) => {
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
-      // const res_body = body;
-      // const docRef = db
-      //   .collection("transactions")
-      //   .doc(res_body.data.attributes.metadata.clientID);
 
-      // docRef
-      //   .update({
-      //     [res_body.data.attributes.source.id+'.paid']: res_body.data.attributes.status,
-      //   })
-      //   .then((logging) => {
-      //     console.log(logging);
-      //   });
-      // console.log(JSON.stringify(body));
-       console.log(JSON.stringify(body));
+      if(response.statusCode == 200){
+        const res_body = body;
+        const docRef = db
+          .collection("transactions")
+          .doc(res_body.data.attributes.metadata.clientID);
+        docRef
+          .update({
+            [res_body.data.attributes.source.id+'.paid']: res_body.data.attributes.status,
+          })
+          .then((logging) => {
+            console.log(logging);
+          });
+        console.log(JSON.stringify(body));
+      }
+      else{
+        
+      }
+      
+       console.log(JSON.stringify(response));
       res.send(JSON.stringify(body));
     });
   }
