@@ -25,6 +25,7 @@ const db = getFirestore();
 
 app.post("/", (req, res) => {
   const request_body = req.body;
+  console.log(JSON.stringify(request_body));
 
   try {
     if (request_body.data.attributes.type == "source.chargeable") {
