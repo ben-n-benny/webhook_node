@@ -16,8 +16,7 @@ app.use(express.json());
 require("dotenv").config();
 
 initializeApp({
-  credential: cert(
-    JSON.parse({
+  credential: cert({
       type: "service_account",
       project_id: "paymongo-kasmagtech",
       private_key_id: "bc0606f554fa9987bde8fef829f457bd0146df0c",
@@ -30,7 +29,7 @@ initializeApp({
       auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
       client_x509_cert_url:
         "https://www.googleapis.com/robot/v1/metadata/x509/benny-svc-acc%40paymongo-kasmagtech.iam.gserviceaccount.com",
-    })
+    }
   ),
 });
 
