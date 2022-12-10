@@ -38,6 +38,16 @@ const db = getFirestore();
 app.post("/", (req, res) => {
   const request_body = req.body;
   console.log(req.body)
+
+  const docRef = db.collection("binny").doc("hello");
+
+  docRef
+    .update({
+      tinaoay: true,
+    })
+    .then((logging) => {
+      console.log(logging);
+    });
   //res.send(req.body.data.attributes.type);
   // if (request_body.data.attributes.type == "source.chargeable") {
   //   let amount = request_body.data.attributes.data.attributes.amount;

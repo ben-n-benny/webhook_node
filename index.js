@@ -21,16 +21,15 @@ const db = getFirestore();
 
 
 const docRef = db
-  .collection("transactions")
-  .doc("fS28aLqGp8XhGq9alCiZUtf7izw2");
+  .collection("binny")
+  .doc("hello");
 
 docRef
   .update({
-    "src_ybTHWJtXRvusRX4QDybH91X3.paid": true,
+    tinaoay: true,
   })
   .then((logging) => {
     console.log(logging);
   });
 
-resizeBy.send("done")
 
