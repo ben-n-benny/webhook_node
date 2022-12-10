@@ -31,6 +31,7 @@ app.post("/", (req, res) => {
       console.log(JSON.stringify(request_body))
       let amount = request_body.data.attributes.data.attributes.amount;
       let id = request_body.data.attributes.data.id;
+      let metadata = request_body.data.attributes.data.attributes.metadata;
       let description = "GCash Payment Description";
       const request = require("request");
 
@@ -50,7 +51,7 @@ app.post("/", (req, res) => {
               description: description,
               currency: "PHP",
             },
-            attribues: { metadata: "metadata" },
+            attribues: { metadata: metadata },
           },
         },
         json: true,
