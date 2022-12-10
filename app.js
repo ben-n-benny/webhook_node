@@ -37,19 +37,8 @@ const db = getFirestore();
 
 app.post("/", (req, res) => {
   const request_body = req.body;
- // console.log((req.body))
 
-  // const docRef = db.collection("binny").doc("hello");
-
-  // docRef
-  //   .set({
-  //     tinaoay: req.body,
-  //   })
-  //   .then((logging) => {
-  //     console.log(logging);
-  //   });
-  //res.send(req.body.data.attributes.type);
-  if (request_body.data.attributes != null){
+  try {
     if (request_body.data.attributes.type == "source.chargeable") {
       let amount = request_body.data.attributes.data.attributes.amount;
       let id = request_body.data.attributes.data.id;
@@ -101,13 +90,11 @@ app.post("/", (req, res) => {
         console.log(JSON.stringify(response));
         res.send(JSON.stringify(body));
       });
-    } else {
-      res.send("Payload Invalid");
     }
-  }
-  else{
+  } catch (e) {
     res.send("Payload Invalid");
   }
+    
     
 });
 
