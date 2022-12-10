@@ -10,7 +10,6 @@ const {
 } = require("firebase-admin/firestore");
 const express = require("express");
 const app = express();
-require("dotenv").config();
 app.use(express.json());
 
 require("dotenv").config();
