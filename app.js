@@ -49,62 +49,67 @@ app.post("/", (req, res) => {
   //     console.log(logging);
   //   });
   //res.send(req.body.data.attributes.type);
-  if (request_body.data.attributes.type == "source.chargeable" ) {
-    let amount = request_body.data.attributes.data.attributes.amount;
-    let id = request_body.data.attributes.data.id;
-    let description = "GCash Payment Description";
-    const request = require("request");
+  const source_stats = request_body.data.attributes.type;
+  if (request_body.data.attributes != null){
+    if (request_body.data.attributes.type == "source.chargeable") {
+      let amount = request_body.data.attributes.data.attributes.amount;
+      let id = request_body.data.attributes.data.id;
+      let description = "GCash Payment Description";
+      const request = require("request");
 
-    const options = {
-      method: "POST",
-      url: "https://api.paymongo.com/v1/payments",
-      headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        authorization: "Basic c2tfdGVzdF9vVjVZcU11TDdXbVd2Y0d4RUxXYXZjRms6",
-      },
-      body: {
-        data: {
-          attributes: {
-            amount: amount,
-            source: { id: id, type: "source" },
-            description: description,
-            currency: "PHP",
-          },
-          attribues: { metadata: "metadata" },
+      const options = {
+        method: "POST",
+        url: "https://api.paymongo.com/v1/payments",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+          authorization: "Basic c2tfdGVzdF9vVjVZcU11TDdXbVd2Y0d4RUxXYXZjRms6",
         },
-      },
-      json: true,
-    };
+        body: {
+          data: {
+            attributes: {
+              amount: amount,
+              source: { id: id, type: "source" },
+              description: description,
+              currency: "PHP",
+            },
+            attribues: { metadata: "metadata" },
+          },
+        },
+        json: true,
+      };
 
-    request(options, function (error, response, body) {
-      if (error) throw new Error(error);
+      request(options, function (error, response, body) {
+        if (error) throw new Error(error);
 
-      if(response.statusCode == 200){
-        const res_body = body;
-        const docRef = db
-          .collection("transactions")
-          .doc(res_body.data.attributes.metadata.clientID);
-        docRef
-          .update({
-            [res_body.data.attributes.source.id+'.paid']: res_body.data.attributes.status,
-          })
-          .then((logging) => {
-            console.log(logging);
-          });
-        console.log(JSON.stringify(body));
-      }
-      else{
+        if (response.statusCode == 200) {
+          const res_body = body;
+          const docRef = db
+            .collection("transactions")
+            .doc(res_body.data.attributes.metadata.clientID);
+          docRef
+            .update({
+              [res_body.data.attributes.source.id + ".paid"]:
+                res_body.data.attributes.status,
+            })
+            .then((logging) => {
+              console.log(logging);
+            });
+          console.log(JSON.stringify(body));
+        } else {
+        }
 
-      }
-      
-       console.log(JSON.stringify(response));
-      res.send(JSON.stringify(body));
-    });
+        console.log(JSON.stringify(response));
+        res.send(JSON.stringify(body));
+      });
+    } else {
+      res.send("Payload Invalid");
+    }
   }
   else{
-    res.send("Payload Invalid")
+    res.send("Payload Invalid");
   }
+    
 });
 
 app.listen(process.env.PORT || 3000);
