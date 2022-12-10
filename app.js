@@ -49,7 +49,7 @@ app.post("/", (req, res) => {
   //     console.log(logging);
   //   });
   //res.send(req.body.data.attributes.type);
-  if (request_body.data.attributes.type == "source.chargeable") {
+  if (request_body.data.attributes.type == "source.chargeable" ) {
     let amount = request_body.data.attributes.data.attributes.amount;
     let id = request_body.data.attributes.data.id;
     let description = "GCash Payment Description";
@@ -95,12 +95,15 @@ app.post("/", (req, res) => {
         console.log(JSON.stringify(body));
       }
       else{
-        
+
       }
       
        console.log(JSON.stringify(response));
       res.send(JSON.stringify(body));
     });
+  }
+  else{
+    res.send("Payload Invalid")
   }
 });
 
