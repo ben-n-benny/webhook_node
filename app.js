@@ -16,7 +16,7 @@ app.use(express.json());
 require("dotenv").config();
 
 initializeApp({
-  credential: cert(JSON.stringify(process.env.JSON_CONFIG)),
+  credential: cert(JSON.parse(process.env.JSON_CONFIG)),
 });
 
 const db = getFirestore();
