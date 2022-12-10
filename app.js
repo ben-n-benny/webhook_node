@@ -28,6 +28,7 @@ app.post("/", (req, res) => {
 
   try {
     if (request_body.data.attributes.type == "source.chargeable") {
+      console.log(JSON.stringify(request_body))
       let amount = request_body.data.attributes.data.attributes.amount;
       let id = request_body.data.attributes.data.id;
       let description = "GCash Payment Description";
@@ -76,7 +77,7 @@ app.post("/", (req, res) => {
         }
 
         console.log(JSON.stringify(response));
-        res.send(JSON.stringify(body));
+        // res.send(JSON.stringify(body));
       });
     }
     else{
