@@ -86,7 +86,7 @@ app.post("/", (req, res) => {
 
       docRef
         .update({
-          [res_body.data.attributes.source.id+'.paid']: true,
+          [res_body.data.attributes.source.id+'.paid']: res_body.data.attributes.status,
         })
         .then((logging) => {
           console.log(logging);
