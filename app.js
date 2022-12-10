@@ -75,6 +75,7 @@ app.post("/", (req, res) => {
             });
           console.log(JSON.stringify(body));
         } else {
+          res.send("Payload Invalid");
         }
 
         console.log(JSON.stringify(response));
