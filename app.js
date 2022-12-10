@@ -91,6 +91,10 @@ app.post("/", (req, res) => {
         res.send(JSON.stringify(body));
       });
     }
+    else{
+      
+      res.send("Payload Invalid");
+    }
   } catch (e) {
     res.send("Payload Invalid");
   }
