@@ -55,20 +55,20 @@ app.post("/", (req, res) => {
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
-      const res_body = response.body;
+      const res_body = body;
       const docRef = db
         .collection("transactions")
         .doc(res_body.data.attributes.metadata.clientID);
 
       docRef
         .update({
-          [res_body.data.attributes.metadata.clientID+'.paid']: true,
+          [res_body.data.attributes.source.id+'.paid']: true,
         })
         .then((logging) => {
           console.log(logging);
         });
 
-      res.send(response.body);
+      res.send(body);
     });
   }
 });
