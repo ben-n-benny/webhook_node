@@ -8,8 +8,11 @@ const {
   Timestamp,
   FieldValue,
 } = require("firebase-admin/firestore");
+
 const express = require("express");
+
 const app = express();
+
 app.use(express.json());
 
 require("dotenv").config();
