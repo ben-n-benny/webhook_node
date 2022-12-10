@@ -1,40 +1,76 @@
-const express = require('express')
-const app = express()
+const {
+  initializeApp,
+  applicationDefault,
+  cert,
+} = require("firebase-admin/app");
+const {
+  getFirestore,
+  Timestamp,
+  FieldValue,
+} = require("firebase-admin/firestore");
+const express = require("express");
+const app = express();
+require("dotenv").config();
+app.use(express.json());
 
-app.post('/',(req,res) => {
-    res.send(req)
+require("dotenv").config();
 
-    let data = JSON.parse(req)
+initializeApp({
+  credential: cert(JSON.parse(process.env.JSON_CONFIG)),
+});
 
-    if(data.attribues.type == 'source.chargeable'){
+const db = getFirestore();
 
-        let amount = data.data.attributes.data.attributes.amount
-        let id = data.data.attributes.data.id
-        let description = "GCash Payment Description";
+app.post("/", (req, res) => {
+  const request_body = req.body;
+  // console.log(req.body)
+  //res.send(req.body.data.attributes.type);
+  if (request_body.data.attributes.type == "source.chargeable") {
+    let amount = request_body.data.attributes.data.attributes.amount;
+    let id = request_body.data.attributes.data.id;
+    let description = "GCash Payment Description";
+    const request = require("request");
 
-        const sdk = require("api")("@paymongo/v1#5u9922cl2759teo");
+    const options = {
+      method: "POST",
+      url: "https://api.paymongo.com/v1/payments",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+        authorization: "Basic c2tfdGVzdF9vVjVZcU11TDdXbVd2Y0d4RUxXYXZjRms6",
+      },
+      body: {
+        data: {
+          attributes: {
+            amount: amount,
+            source: { id: id, type: "source" },
+            description: description,
+            currency: "PHP",
+          },
+          attribues: { metadata: "metadata" },
+        },
+      },
+      json: true,
+    };
 
-        sdk.auth("sk_test_oV5YqMuL7WmWvcGxELWavcFk");
-        sdk
-          .createAPayment({
-            data: {
-              attributes: {
-                amount: amount,
-                source: { id: id, type: "source" },
-                currency: "PHP",
-                description: description,
-              },
-              attribues: { metadata: "metadata" },
-            },
-          })
-          .then(({ data }) => console.log(data))
-          .catch((err) => console.error(err));
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+      const res_body = response.body;
+      const docRef = db
+        .collection("transactions")
+        .doc(res_body.data.attributes.metadata.clientID);
 
-    }
-    else{
+      docRef
+        .update({
+          [res_body.data.attributes.metadata.clientID+'.paid']: true,
+        })
+        .then((logging) => {
+          console.log(logging);
+        });
 
-    }
-    
-})
+      res.send(response.body);
+    });
+  }
+});
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3000);

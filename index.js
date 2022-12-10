@@ -11,18 +11,26 @@ const {
   FieldValue,
 } = require("firebase-admin/firestore");
 
-const serviceAccount = require("./paymongo-kasmagtech-2a3f2649bb98.json");
+require('dotenv').config()
 
 initializeApp({
-  credential: cert(serviceAccount),
+  credential: cert(JSON.parse(process.env.JSON_CONFIG)),
 });
 
 const db = getFirestore();
 
-const docRef = db.collection("benny").doc("alovelace");
 
-docRef.set({
-  first: "Ada",
-  last: "Lovelace",
-  born: 1815,
-});
+const docRef = db
+  .collection("transactions")
+  .doc("fS28aLqGp8XhGq9alCiZUtf7izw2");
+
+docRef
+  .update({
+    "src_ybTHWJtXRvusRX4QDybH91X3.paid": true,
+  })
+  .then((logging) => {
+    console.log(logging);
+  });
+
+resizeBy.send("done")
+
