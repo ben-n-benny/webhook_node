@@ -37,7 +37,7 @@ const db = getFirestore();
 
 app.post("/", (req, res) => {
   const request_body = req.body;
-  console.log(req.body)
+  console.log(String.toString(req.body))
 
   // const docRef = db.collection("binny").doc("hello");
 
@@ -91,7 +91,7 @@ app.post("/", (req, res) => {
         .then((logging) => {
           console.log(logging);
         });
-
+      console.log(String.toString(body));
       res.send(body);
     });
   }
