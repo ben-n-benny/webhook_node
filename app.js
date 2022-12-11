@@ -29,7 +29,7 @@ app.post("/", (req, res) => {
 
   try {
     if (request_body.data.attributes.type == "source.chargeable") {
-      console.log(JSON.stringify(request_body))
+      //console.log(JSON.stringify(request_body))
       let amount = request_body.data.attributes.data.attributes.amount;
       let id = request_body.data.attributes.data.id;
       let metadata = request_body.data.attributes.data.attributes.metadata;
@@ -63,6 +63,7 @@ app.post("/", (req, res) => {
 
         if (response.statusCode == 200) {
           const res_body = body;
+          console.log(JSON.stringify(body));
           const docRef = db
             .collection("transactions")
             .doc(res_body.data.attributes.metadata.clientID);
@@ -75,6 +76,21 @@ app.post("/", (req, res) => {
               console.log(logging);
             });
           console.log(JSON.stringify(body));
+          // let data = {
+          //   email: email,
+          //   price: price,
+          //   source_id: source_id,
+          // };
+          // let options = {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json;charset=utf-8",
+          //   },
+          //   body: JSON.stringify(data),
+          // };
+          // fetch("url",options)
+          //   .then((response) => response.json())
+          //   .then((data) => console.log(data));
         } else {
           res.send("Payload Invalid");
         }
