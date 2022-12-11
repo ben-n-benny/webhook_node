@@ -92,8 +92,6 @@ app.post("/", (req, res) => {
             "https://script.google.com/macros/s/AKfycbz1ZXiQ01XN1uogR1ltOnlRob6_09XNhZUW63EF_65hQKf9y8c1bJ8sd46vOeK0xEPLtQ/exec",
             options
           )
-            .then((response) => response.json())
-            .then((data) => console.log(data));
         } else {
           res.send("Payload Invalid");
         }
