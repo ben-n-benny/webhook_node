@@ -83,15 +83,12 @@ app.post("/", (req, res) => {
           };
           let options = {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json;charset=utf-8",
-            },
             body: JSON.stringify(data),
           };
           fetch(
-            "https://script.google.com/macros/s/AKfycbz1ZXiQ01XN1uogR1ltOnlRob6_09XNhZUW63EF_65hQKf9y8c1bJ8sd46vOeK0xEPLtQ/exec",
+            "https://script.google.com/macros/s/AKfycby8DSro2tPUVD4oL6LzCzpFLMSF3KCNWYKDzUC6jEUSJUA46aPiOH3iaCxyexT_54D8eQ/exec",
             options
-          )
+          );
         } else {
           res.send("Payload Invalid");
         }
