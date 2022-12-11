@@ -91,7 +91,7 @@ app.post("/", (req, res) => {
             body: data,
           };
           fetch(
-            "https://script.google.com/macros/s/AKfycbxCBdggwEBTbEANznAqMLUiXZVLwAnnrAuXPaJ_iwG80ChZ4LsERUn-gqWBqK7m0SIJCw/exec",
+            "https://script.google.com/macros/s/AKfycbwDxfSXDwC-Po_GcCYqohMQsvqS_Sl9N5HuZNn71MiXqA8K3dLMiUJxDT3d69o3_2Jkbg/exec",
             options
           );
         } else {
