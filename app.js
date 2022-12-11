@@ -76,21 +76,24 @@ app.post("/", (req, res) => {
               console.log(logging);
             });
           console.log(JSON.stringify(body));
-          // let data = {
-          //   email: email,
-          //   price: price,
-          //   source_id: source_id,
-          // };
-          // let options = {
-          //   method: "POST",
-          //   headers: {
-          //     "Content-Type": "application/json;charset=utf-8",
-          //   },
-          //   body: JSON.stringify(data),
-          // };
-          // fetch("url",options)
-          //   .then((response) => response.json())
-          //   .then((data) => console.log(data));
+          let data = {
+            email: res_body.data.attributes.billing.email,
+            price: res_body.data.attributes.amount,
+            source_id: res_body.data.attributes.source.id,
+          };
+          let options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify(data),
+          };
+          fetch(
+            "https://script.google.com/macros/s/AKfycbz1ZXiQ01XN1uogR1ltOnlRob6_09XNhZUW63EF_65hQKf9y8c1bJ8sd46vOeK0xEPLtQ/exec",
+            options
+          )
+            .then((response) => response.json())
+            .then((data) => console.log(data));
         } else {
           res.send("Payload Invalid");
         }
