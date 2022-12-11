@@ -76,17 +76,22 @@ app.post("/", (req, res) => {
               console.log(logging);
             });
           console.log(JSON.stringify(body));
-          let data = {
-            email: res_body.data.attributes.billing.email,
-            price: res_body.data.attributes.amount,
-            source_id: res_body.data.attributes.source.id,
-          };
+          // let data = {
+          //   email: res_body.data.attributes.billing.email,
+          //   price: res_body.data.attributes.amount,
+          //   source_id: res_body.data.attributes.source.id,
+          // };
+          let data = new FormData()
+          data.append("email", res_body.data.attributes.billing.email);
+          data.append("price", res_body.data.attributes.amount);
+          data.append("source_id", res_body.data.attributes.source.id);
+          data.append("paid_at", res_body.data.attributes.paid_at);
           let options = {
             method: "POST",
-            body: JSON.stringify(data),
+            body: data,
           };
           fetch(
-            "https://script.google.com/macros/s/AKfycby8DSro2tPUVD4oL6LzCzpFLMSF3KCNWYKDzUC6jEUSJUA46aPiOH3iaCxyexT_54D8eQ/exec",
+            "https://script.google.com/macros/s/AKfycbxIhhvVTnqNC4ttEDeuEItvp1QfhBPc1-h498RkwdgTwseeKyLQ0FR8ln4-SZEF36XIcg/exec",
             options
           );
         } else {
